@@ -1,5 +1,7 @@
 # kg-enricher
 
+[![PyPI version](https://badge.fury.io/py/kg-enricher.svg)](https://badge.fury.io/py/kg-enricher)
+
 `kg-enricher` is an open source Python library for enriching strings, entities and knowledge graphs using Wikibase knowledge graphs. It's adapted for people, organizations and German geographic entities, both modern and historical. By default it connects to Wikidata, but it can be configured for any Wikibase instance.
 
 **Context.** In project [BERD@NFDI](https://www.berd-nfdi.de) there are multiple knowledge graphs with German company data. We link strings to entities and enrich strings with data from knowledge graphs. For geographic strings we also check whether geographic coordinates of an entity correspond to a point inside modern or historical German boundaries using [the CShapes 2.0 Dataset](https://doi.org/10.1177/00220027211013).
