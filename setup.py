@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="kg-enricher",
-    version='0.1.5',
+    version='0.1.6',
     author="Renat Shigapov",
     license="MIT",
     description="A Python library for enriching strings, entities and KGs using Wikibase knowledge graphs. "

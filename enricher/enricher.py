@@ -3,6 +3,7 @@ import json
 import geopandas as gpd
 from shapely.geometry import Point
 from pprint import pprint
+import pkg_resources
 
 # Configuration
 wikibase_api_url = "https://www.wikidata.org/w/api.php"
@@ -13,15 +14,15 @@ org_properties = {'P571': 'inception', 'P576': 'dissolution', 'P3220': 'OpenCorp
 geo_properties = {'P625': 'geographic coordinates', 'P1566': 'GeoNames ID', 'P402': 'OSM Relation ID', 'P440': 'German district key', 'P439': 'German municipality key', 'P1388': 'German regional key', 'P1937': 'UN/LOCODE', 'P2671': 'Google Knowledge Graph ID', 'P646': 'Freebase ID', 'P590': 'GNIS ID', 'P774': 'FIPS 55-3', 'P11693': 'OpenStreetMap node ID'}
 
 # Load boundary data for Germany
-historical_germany_1886_1919 = gpd.read_file('./84.json')
-historical_germany_1919_1920 = gpd.read_file('./85.json')
-historical_germany_1920_1938 = gpd.read_file('./86.json')
-historical_germany_1938_1945 = gpd.read_file('./87.json')
-historical_GFR_1945_1949 = gpd.read_file('./88.json')
-historical_GFR_1949_1990 = gpd.read_file('./89.json')
-historical_GFR_1990_2019 = gpd.read_file('./90.json')
-historical_GDR_1945_1949 = gpd.read_file('./91.json')
-historical_GDR_1949_1990 = gpd.read_file('./92.json')
+historical_germany_1886_1919 = gpd.read_file(pkg_resources.resource_filename('enricher', '84.json'))
+historical_germany_1919_1920 = gpd.read_file(pkg_resources.resource_filename('enricher', '85.json'))
+historical_germany_1920_1938 = gpd.read_file(pkg_resources.resource_filename('enricher', '86.json'))
+historical_germany_1938_1945 = gpd.read_file(pkg_resources.resource_filename('enricher', '87.json'))
+historical_GFR_1945_1949 = gpd.read_file(pkg_resources.resource_filename('enricher', '88.json'))
+historical_GFR_1949_1990 = gpd.read_file(pkg_resources.resource_filename('enricher', '89.json'))
+historical_GFR_1990_2019 = gpd.read_file(pkg_resources.resource_filename('enricher', '90.json'))
+historical_GDR_1945_1949 = gpd.read_file(pkg_resources.resource_filename('enricher', '91.json'))
+historical_GDR_1949_1990 = gpd.read_file(pkg_resources.resource_filename('enricher', '92.json'))
 current_germany_boundary = historical_GFR_1990_2019
 
 
