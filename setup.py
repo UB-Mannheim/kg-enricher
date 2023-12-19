@@ -7,14 +7,14 @@ with open("README.md", "r") as fh:
 
 setup(
     name="kg-enricher",
-    version='0.1.0',
+    version='0.1.1',
     author="Renat Shigapov",
     license="MIT",
     description="A Python library for enriching strings, entities and KGs using Wikibase knowledge graphs. "
                 "It's adapted for people, organizations and German geographic entities, both modern and historical.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/UB-Mannheim/madata",
+    url="https://github.com/UB-Mannheim/kg-enricher",
     install_requires=['geopandas', 'shapely', 'requests', 'appengine-python-standard'],
     packages=find_packages(),
     classifiers=[

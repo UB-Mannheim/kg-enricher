@@ -32,7 +32,7 @@ Just import `enrich`-function and apply it to strings, which correspond to peopl
 
 An example for a person:
 ```python
-from kg-enricher import enrich
+from enricher import enrich
 enrich("Adolf Daimler")
 {'label': 'Adolf Daimler',
  'description': 'German entrepreneur (1871-1913)',
@@ -59,7 +59,7 @@ enrich("Adolf Daimler")
 
 An example for a geographic entity:
 ```python
-from kg-enricher import enrich
+from enricher import enrich
 enrich("Mannheim")
 {'label': 'Mannheim',
  'description': 'city in Baden-Württemberg, Germany',
@@ -99,7 +99,7 @@ enrich("Mannheim")
 An example for an organization:
 
 ```python
-from kg-enricher import enrich
+from enricher import enrich
 enrich("BASF SE")
 {'label': 'BASF',
  'description': 'German chemical company with worldwide reach',
@@ -150,7 +150,7 @@ If you use `kg-enricher` on geographic entities, please cite the following paper
 
 An example for "West Berlin":
 ```python
-from kg-enricher import enrich
+from enricher import enrich
 enrich("West Berlin")
 {'label': 'West Berlin',
  'description': 'the Western sectors of Berlin between 1945 and 1990',
@@ -178,7 +178,7 @@ enrich("West Berlin")
 
 An example for "East Berlin":
 ```python
-from kg-enricher import enrich
+from enricher import enrich
 enrich("East Berlin")
 {'label': 'East Berlin',
  'description': 'Soviet sector of Berlin between 1949 and 1990',
