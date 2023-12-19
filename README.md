@@ -210,3 +210,4 @@ enrich("East Berlin")
 
 ## Archived code
 
+Shigapov, R. (2023). KG-enricher: An open-source Python library for enriching strings, entities and knowledge graphs using Wikibase knowledge graphs (0.1.0). Zenodo. https://doi.org/10.5281/zenodo.10405073
