@@ -1,9 +1,7 @@
-import requests
-import json
 import geopandas as gpd
-from shapely.geometry import Point
-from pprint import pprint
 import pkg_resources
+import requests
+from shapely.geometry import Point
 
 # Configuration
 wikibase_api_url = "https://www.wikidata.org/w/api.php"
