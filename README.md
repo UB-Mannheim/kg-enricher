@@ -221,6 +221,57 @@ To get labels, descriptions, and aliases in a specific language, use `language`-
 enrich('Breslau', language="de")
 ```
 
+To get entities only for a certain entity types, use `entity-type`-parameter. Possible values are "org", "per", "geo" and None. Default is None, so it enriches with entities of any type.
+````
+enrich('Mannheim', entity_type="geo")
+```
+
+You can combine those parameters:
+```
+pprint(enrich('Cöln', limit=5, language="de", entity_type='geo'))
+[{'error': 'Entity does not match the specified entity type',
+  'id': 'Q105550033'},
+ {'error': 'Entity does not match the specified entity type',
+  'id': 'Q37262196'},
+ {'Freebase ID': '/m/01v8c',
+  'GeoNames ID': '2886242',
+  'German district key': '05315',
+  'German municipality key': '05315000',
+  'German regional key': '053150000000',
+  'OSM Relation ID': '62578',
+  'aliases': ['Kölle',
+              'Köln, Deutschland',
+              'Köln (Deutschland)',
+              'Colonia',
+              'Colonia Claudia Ara Agrippinensium',
+              'CCAA',
+              'Cöln',
+              'Cöln am Rhein'],
+  'description': 'Millionenmetropole am Rhein und bevölkerungsreichste Stadt '
+                 'in Nordrhein-Westfalen',
+  'geographic coordinates': {'altitude': None,
+                             'globe': 'http://www.wikidata.org/entity/Q2',
+                             'latitude': 50.942222222222,
+                             'longitude': 6.9577777777778,
+                             'precision': 0.00027777777777778},
+  'id': 'Q365',
+  'is_within_current_germany': True,
+  'is_within_historical_GDR_1945_1949': False,
+  'is_within_historical_GDR_1949_1990': False,
+  'is_within_historical_GFR_1945_1949': True,
+  'is_within_historical_GFR_1949_1990': True,
+  'is_within_historical_GFR_1990_2019': True,
+  'is_within_historical_germany_1886_1919': True,
+  'is_within_historical_germany_1919_1920': True,
+  'is_within_historical_germany_1920_1938': True,
+  'is_within_historical_germany_1938_1945': True,
+  'label': 'Köln',
+  'url': 'https://www.wikidata.org/wiki/Special:EntityData/Q365'},
+ {'error': 'Entity does not match the specified entity type', 'id': 'Q35872'},
+ {'error': 'Entity does not match the specified entity type',
+  'id': 'Q18019200'}]
+```
+
 ## Archived code
 
 Shigapov, R. (2023). KG-enricher: An open-source Python library for enriching strings, entities and knowledge graphs using Wikibase knowledge graphs (0.1.0). Zenodo. https://doi.org/10.5281/zenodo.10405073

@@ -38,9 +38,6 @@ def query_wikibase(entity, limit=1, api_url=wikibase_api_url):
 
 
 def get_label_description_aliases(data, language='en'):
-    """
-    Extracts label, description, and aliases from a given Wikibase entity data in the specified language.
-    """
     label = data['labels'][language]['value'] if language in data['labels'] else None
     description = data['descriptions'][language]['value'] if language in data['descriptions'] else None
     aliases = [alias['value'] for alias in data['aliases'][language]] if language in data['aliases'] else []
@@ -62,23 +59,28 @@ def get_coordinates(entity_id, special_entitydata_url=wikibase_special_entitydat
     return None
 
 
-def get_label_for_qid(qid, language='en', special_entitydata_url=wikibase_special_entitydata):
+def determine_properties(entity_data, entity_type=None):
     """
-    Retrieves the label for a given QID from a specified Wikibase instance in the specified language.
+    Determines the properties to fetch based on the entity type. 
+    If entity_type is None, it does not filter by type and returns the appropriate properties.
     """
-    url = f"{special_entitydata_url}{qid}.json"
-    response = requests.get(url).json()
-    data = response['entities'][qid]
-    return data['labels'][language]['value'] if language in data['labels'] else None
-
-
-def determine_properties(entity_data):
-    if 'P31' in entity_data['claims'] and any([x['mainsnak']['datavalue']['value']['id'] == 'Q5' for x in entity_data['claims']['P31']]):
-        return person_properties  # Person
-    elif coordinate_property in entity_data['claims']:
-        return geo_properties  # Geographic entity
-    else:
-        return org_properties  # Organization
+    if entity_type == "per":
+        if 'P31' in entity_data['claims'] and any(x['mainsnak']['datavalue']['value']['id'] == 'Q5' for x in entity_data['claims']['P31']):
+            return person_properties
+    elif entity_type == "geo":
+        if coordinate_property in entity_data['claims']:
+            return geo_properties
+    elif entity_type == "org":
+        return org_properties
+    elif entity_type is None:
+        # Determine properties without filtering by type
+        if 'P31' in entity_data['claims'] and any(x['mainsnak']['datavalue']['value']['id'] == 'Q5' for x in entity_data['claims']['P31']):
+            return person_properties
+        elif coordinate_property in entity_data['claims']:
+            return geo_properties
+        else:
+            return org_properties
+    return None
 
 
 def extract_information(entity_id, properties_to_fetch, language='en'):
@@ -128,16 +130,23 @@ def fetch_entity_data(entity_id, special_entitydata_url=wikibase_special_entityd
         return None
 
 
-def enrich(entity_string, limit=1, language='en'):
+def enrich(entity_string, limit=1, language='en', entity_type=None):
+    """
+    Enriches entities optionally based on the specified entity_type: "per" for person, "org" for organization, "geo" for geographic entity.
+    If entity_type is None, it enriches with an entity of any entity type.
+    """
     entity_ids = query_wikibase(entity_string, limit=limit)
     if entity_ids:
         results = []
         for entity_id in entity_ids:
             entity_data = fetch_entity_data(entity_id)
             if entity_data:
-                properties_to_fetch = determine_properties(entity_data)
-                enriched_data = extract_information(entity_id, properties_to_fetch, language)
-                results.append(enriched_data)
+                properties_to_fetch = determine_properties(entity_data, entity_type)
+                if properties_to_fetch:
+                    enriched_data = extract_information(entity_id, properties_to_fetch, language)
+                    results.append(enriched_data)
+                else:
+                    results.append({'error': 'Entity does not match the specified entity type', 'id': entity_id})
             else:
                 results.append({'error': 'Entity data not found', 'id': entity_id})
         return results
