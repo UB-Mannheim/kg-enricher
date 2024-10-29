@@ -212,17 +212,17 @@ enrich("East Berlin")
 ## Extra parameters
 
 To get more than one matched entities, use `limit`-parameter (default is 1):
-````
+```
 enrich('Heidelberg', limit=3)
 ```
 
 To get labels, descriptions, and aliases in a specific language, use `language`-parameter (default is "en"):
-````
+```
 enrich('Breslau', language="de")
 ```
 
 To get entities only for a certain entity types, use `entity-type`-parameter. Possible values are "org", "per", "geo" and None. Default is None, so it enriches with entities of any type.
-````
+```
 enrich('Mannheim', entity_type="geo")
 ```
 
