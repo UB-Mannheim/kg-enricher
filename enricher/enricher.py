@@ -32,16 +32,15 @@ def is_within_boundary(lat, lon, boundary_gdf):
     return any(boundary_gdf.contains(point))
 
 
-def query_wikibase(entity, api_url=wikibase_api_url):
+def query_wikibase(entity, limit=1, api_url=wikibase_api_url):
     """
-    Queries a specified Wikibase instance for an entity using its API and returns the entity ID.
+    Queries a specified Wikibase instance for an entity using its API and returns up to limit entity IDs.
     """
-    search_url = f"{api_url}?action=wbsearchentities&search={entity}&language=en&format=json"
+    search_url = f"{api_url}?action=wbsearchentities&search={entity}&language=en&format=json&limit={limit}"
     search_response = requests.get(search_url).json()
     if search_response.get('search'):
-        entity_id = search_response['search'][0]['id']
-        return entity_id
-    return None
+        return [result['id'] for result in search_response['search'][:limit]]
+    return []
 
 
 def get_label_description_aliases(data):
@@ -147,16 +146,21 @@ def fetch_entity_data(entity_id, special_entitydata_url=wikibase_special_entityd
         return None
 
 
-def enrich(entity_string):
+def enrich(entity_string, limit=1):
     """
     Main function to enrich an entity string with information from a Wikibase instance.
+    Allows fetching multiple enrich results based on the limit.
     """
-    entity_id = query_wikibase(entity_string)
-    if entity_id:
-        entity_data = fetch_entity_data(entity_id)
-        if entity_data:
-            properties_to_fetch = determine_properties(entity_data)
-            return extract_information(entity_id, properties_to_fetch)
-        else:
-            return {'error': 'Entity data not found'}
-    return {'error': 'Entity ID not found'}
+    entity_ids = query_wikibase(entity_string, limit=limit)
+    if entity_ids:
+        results = []
+        for entity_id in entity_ids:
+            entity_data = fetch_entity_data(entity_id)
+            if entity_data:
+                properties_to_fetch = determine_properties(entity_data)
+                enriched_data = extract_information(entity_id, properties_to_fetch)
+                results.append(enriched_data)
+            else:
+                results.append({'error': 'Entity data not found', 'id': entity_id})
+        return results
+    return [{'error': 'Entity ID not found for given string'}]

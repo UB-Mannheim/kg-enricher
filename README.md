@@ -10,6 +10,7 @@
 * [Installation](#installation)
 * [How to use](#how-to-use)
 * [Geographic linking](#geographic-linking)
+* [Extra parameters](#extra-parameters)
 * [Archived code](#archived-code)
 
 ## Installation
@@ -206,6 +207,13 @@ enrich("East Berlin")
  'is_within_historical_GFR_1990_2019': True,
  'is_within_historical_GDR_1945_1949': True,
  'is_within_historical_GDR_1949_1990': True}
+```
+
+## Extra parameters
+
+To get more than one matched entities, use `limit`-parameter:
+````
+enrich('Heidelberg', limit=3)
 ```
 
 ## Archived code
